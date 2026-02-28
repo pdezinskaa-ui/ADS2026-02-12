@@ -11,7 +11,7 @@ public class FiboB {
 
     private long  startTime = System.currentTimeMillis();
 
-    public static void main(String[] args) {
+     static void main(String... args) {
         //вычисление чисел простым быстрым методом
         FiboB fibo = new FiboB();
         int n = 55555;
