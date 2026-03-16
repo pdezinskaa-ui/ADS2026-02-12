@@ -40,6 +40,7 @@ public class FiboC {
             {
                 period = i + 1;
                 break;
+
             }
         }
 
