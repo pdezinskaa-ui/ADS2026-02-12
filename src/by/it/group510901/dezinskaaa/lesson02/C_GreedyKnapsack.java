@@ -1,4 +1,9 @@
 package by.it.group510901.dezinskaaa.lesson02;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Scanner;
 /*
 Даны
 1) объем рюкзака 4
@@ -13,9 +18,7 @@ package by.it.group510901.dezinskaaa.lesson02;
 Предметы можно резать на кусочки (т.е. алгоритм будет жадным)
  */
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Scanner;
+
 
 public class C_GreedyKnapsack {
     public static void main(String[] args) throws FileNotFoundException {
@@ -40,15 +43,27 @@ public class C_GreedyKnapsack {
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
-        //тут необходимо реализовать решение задачи
+        Arrays.sort(items); //тут необходимо реализовать решение задачи
         //итогом является максимально воможная стоимость вещей в рюкзаке
         //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
+        int remaining = W; //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
 
-        //ваше решение.
+        for (Item item : items) {
+            if (remaining == 0) break;
+            if (item.weight <= remaining) {
+                // Предмет помещается целиком
+                result += item.cost;
+                remaining -= item.weight;
+            } else {
+                // Берём часть предмета
+                result += (double) item.cost * remaining / item.weight;
+                remaining = 0;
+                break;
+            }
+        }
 
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
@@ -74,10 +89,10 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
+            // Сравниваем по удельному весу в порядке убывания
+            double thisRatio = (double) this.cost / this.weight;
+            double otherRatio = (double) o.cost / o.weight;
+            return Double.compare(otherRatio, thisRatio);
         }
     }
 }

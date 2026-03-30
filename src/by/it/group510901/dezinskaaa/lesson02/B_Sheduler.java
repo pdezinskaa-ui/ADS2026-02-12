@@ -2,6 +2,7 @@ package by.it.group510901.dezinskaaa.lesson02;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /*
 Даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -31,9 +32,29 @@ public class B_Sheduler {
         //Начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
-
-
+        // 1. Отфильтруем события, которые полностью лежат внутри [from, to]
+        List<Event> validEvents = new ArrayList<>();
+        for (Event e : events) {
+            if (e.start >= from && e.stop <= to) {
+                validEvents.add(e);
+            }
+        }
+        // 2. Сортируем по времени окончания (stop)
+        validEvents.sort((e1, e2) -> {
+            if (e1.stop != e2.stop) {
+                return Integer.compare(e1.stop, e2.stop);
+            } else {
+                return Integer.compare(e1.start, e2.start);
+            }
+        });
+        // 3. Жадный выбор
+        int lastStop = from; // время, до которого занята аудитория
+        for (Event e : validEvents) {
+            if (e.start >= lastStop) {
+                result.add(e);
+                lastStop = e.stop;
+            }
+        }
         return result;          //вернем итог
     }
 
