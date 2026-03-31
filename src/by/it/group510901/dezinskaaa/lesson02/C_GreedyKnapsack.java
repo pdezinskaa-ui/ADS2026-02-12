@@ -92,6 +92,12 @@ public class C_GreedyKnapsack {
             // Сравниваем по удельному весу в порядке убывания
             double thisRatio = (double) this.cost / this.weight;
             double otherRatio = (double) o.cost / o.weight;
+
+            // Для устойчивости сортировки при равных отношениях
+            if (Math.abs(thisRatio - otherRatio) < 1e-9) {
+                return Integer.compare(o.weight, this.weight); // больший вес сначала
+            }
+
             return Double.compare(otherRatio, thisRatio);
         }
     }

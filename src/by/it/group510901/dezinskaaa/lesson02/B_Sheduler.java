@@ -32,14 +32,14 @@ public class B_Sheduler {
         //Начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        // 1. Отфильтруем события, которые полностью лежат внутри [from, to]
+        // Отфильтруем события, которые полностью лежат внутри [from, to]
         List<Event> validEvents = new ArrayList<>();
         for (Event e : events) {
             if (e.start >= from && e.stop <= to) {
                 validEvents.add(e);
             }
         }
-        // 2. Сортируем по времени окончания (stop)
+        // Сортируем по времени окончания (stop)
         validEvents.sort((e1, e2) -> {
             if (e1.stop != e2.stop) {
                 return Integer.compare(e1.stop, e2.stop);
@@ -47,7 +47,7 @@ public class B_Sheduler {
                 return Integer.compare(e1.start, e2.start);
             }
         });
-        // 3. Жадный выбор
+        // Жадный выбор
         int lastStop = from; // время, до которого занята аудитория
         for (Event e : validEvents) {
             if (e.start >= lastStop) {
